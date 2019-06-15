@@ -1,0 +1,52 @@
+---
+driver:
+  name: docker
+#enble to true if you are not s root on your workstation  
+  use_sudo: false
+  binary: /usr/bin/docker
+  #docker: /usr/bin/docker
+  socket: tcp://localhost:2376 
+
+platforms:
+  - name: ubuntu-14.04
+    driver:
+       #image: rndmh3ro/docker-ubuntu1404-ansible:latest
+       image: ansible:16.04 
+       platform: ubuntu
+    lifecycle:
+       pre-verify:
+           - remote: sudo apt-get install python-pip
+
+provisioner:
+  name: ansible_playbook
+  hosts: test-kitchen
+  playbook: test-playbook.yml
+  roles_path: roles
+  ansible_verbose: false
+  ansible_verbosity: 2
+  require_ansible_repo: false
+  require_ansible_omnibus: false
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_connection: ssh
+  additional_copy_path:
+      - "."
+verifier:
+  #name: serverspec
+  #use_sudo: yes
+  #sudo_path: true
+  name: shell
+  command: >
+    pytest --color=yes
+    --host="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}"
+    "test/integration/${KITCHEN_SUITE}"
+
+suites:
+  - name: default
+    verifier:
+        default_pattern: true
+        #bundler_path: '/usr/local/bin'
+        #rspec_path: '/usr/local/bin'
+        env_vars:
+              TARGET_HOST: 127.0.0.1
+              SUDO: true
