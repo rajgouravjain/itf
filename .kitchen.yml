@@ -42,7 +42,7 @@ verifier:
     "test/integration/${KITCHEN_SUITE}"
 
 suites:
-  - name: default
+  - name: basic 
     verifier:
         default_pattern: true
         #bundler_path: '/usr/local/bin'

@@ -1,1 +1,3 @@
 .kitchen
+__pycache__
+.pyc
