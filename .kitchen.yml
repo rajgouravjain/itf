@@ -3,20 +3,22 @@ driver:
   name: docker
 #enble to true if you are not s root on your workstation  
   use_sudo: false
-  binary: /usr/bin/docker
+  #binary: /usr/bin/docker
   #docker: /usr/bin/docker
-  socket: tcp://localhost:2376 
+  #socket: tcp://localhost:2376 
+  provision_command:
+    - sudo mkdir -p /tmp/kitchen 
+    - sudo chown kitchen. /tmp/kitchen
 
 platforms:
-  - name: ubuntu-14.04
+  - name: ubuntu-20.04
     driver:
        #image: rndmh3ro/docker-ubuntu1404-ansible:latest
-       image: ansible:16.04 
+       image: ansible:20.04 
        platform: ubuntu
     lifecycle:
        pre-verify:
-           - remote: sudo apt-get install python-pip
-
+           - remote: sudo apt-get install -y python-pip
 provisioner:
   name: ansible_playbook
   hosts: test-kitchen
@@ -31,22 +33,30 @@ provisioner:
   ansible_connection: ssh
   additional_copy_path:
       - "."
+  init_environment: |
+    ln -s /usr/bin/bundle2.7 /usr/bin/bundle
 verifier:
-  #name: serverspec
-  #use_sudo: yes
-  #sudo_path: true
   name: shell
   command: >
     pytest --color=yes
-    --host="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}"
-    "test/integration/${KITCHEN_SUITE}"
+    --hosts="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}" "tests/integration/${KITCHEN_SUITE}/testinfra"
+
+#verifier:
+#  name: inspec
+#  use_sudo: yes
+#  sudo_path: true
 
 suites:
-  - name: basic 
+  - name: basic
+    #for testinfra
     verifier:
-        default_pattern: true
-        #bundler_path: '/usr/local/bin'
-        #rspec_path: '/usr/local/bin'
-        env_vars:
-              TARGET_HOST: 127.0.0.1
-              SUDO: true
+      default_pattern: true
+      env_vars:
+        TARGET_HOST: 127.0.0.1
+        SUDO: true
+
+#  - name: basic
+#    #for inspec
+#    verifier:
+#      inspec_tests:
+#        - tests/integration/basic/inspec/hello

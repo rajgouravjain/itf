@@ -10,7 +10,7 @@ gem "serverspec"
 gem "kitchen-verifier-serverspec"
 gem 'kitchen-docker', :git => 'https://github.com/test-kitchen/kitchen-docker.git'
 ```
-- run ```bundler``` comand to install all packages.
+- run ```BUNDLE_GEMFILE=Gemfile bundler install``` command to install all packages.
 - setup .kitchen.yml file
 - run following commands ::
 ```sh 
