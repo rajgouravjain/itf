@@ -14,12 +14,12 @@ gem 'kitchen-docker', :git => 'https://github.com/test-kitchen/kitchen-docker.gi
 - setup .kitchen.yml file
 - run following commands ::
 ```sh 
-bundler exec kitchen create basic-ubuntu-1804
+bundler exec kitchen create basic-ubuntu-2004
 ```
 ```sh 
-bundler exec kitchen converge basic-ubuntu-1804
+bundler exec kitchen converge basic-ubuntu-2004
 ```
 ```sh 
-bundler exec kitchen verify basic-ubuntu-1804
+bundler exec kitchen verify basic-ubuntu-2004
 ```
 
