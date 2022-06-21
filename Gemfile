@@ -1,10 +1,14 @@
 source "https://rubygems.org"
 
 gem "rake"
-gem "rspec" 
+gem 'nokogiri'
+gem 'rspec', :require => 'spec'
 gem "test-kitchen"
 gem "kitchen-docker"
 gem "kitchen-ansible"
 gem 'kitchen-inspec'
-gem 'inspec', ">= 4.37.8"
+gem 'inspec'
 gem 'serverspec'
+gem 'awspec'
+gem "rubyzip", ">= 1.3.0"
+gem "mixlib-shellout"

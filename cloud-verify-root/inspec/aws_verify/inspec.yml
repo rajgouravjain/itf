@@ -1,0 +1,14 @@
+name: aws_verify
+title: InSpec Profile to verify AWS infra
+maintainer: Rajgourav Jain
+copyright: Rajgourav Jain
+copyright_email: rajgourav.jain@gmail.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile
+version: 0.1.0
+inspec_version: '>= 4.6.9'
+depends:
+  - name: inspec-aws
+    url: https://github.com/inspec/inspec-aws/archive/refs/tags/1.0.1-for-inspec-4.7.tar.gz
+supports:
+  platform: aws

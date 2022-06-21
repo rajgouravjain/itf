@@ -1,24 +1,29 @@
 ---
 driver:
   name: docker
-#enble to true if you are not s root on your workstation  
+#enble to true if you are not as root on your workstation  
   use_sudo: false
-  #binary: /usr/bin/docker
-  #docker: /usr/bin/docker
-  #socket: tcp://localhost:2376 
+  binary: /usr/bin/docker
+  docker: /usr/bin/docker
+  socket: tcp://localhost:2376 
   provision_command:
+    - apt-get update
+    - apt-get install python3 -y
+    - apt-get install python3-pip -y
+    - python3 -m pip install --upgrade pip
+    - python3 -m pip  install ansible pytest
+    - mkdir -p /run/sshd
     - sudo mkdir -p /tmp/kitchen 
     - sudo chown kitchen. /tmp/kitchen
 
 platforms:
   - name: ubuntu-20.04
     driver:
-       #image: rndmh3ro/docker-ubuntu1404-ansible:latest
-       image: ansible:20.04 
+       image: ubuntu:20.04 
        platform: ubuntu
     lifecycle:
        pre-verify:
-           - remote: sudo apt-get install -y python-pip
+           - remote: sudo apt-get install -y python3-pip
 provisioner:
   name: ansible_playbook
   hosts: test-kitchen
