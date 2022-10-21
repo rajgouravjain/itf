@@ -1451,7 +1451,7 @@ GEM
     net-ssh-gateway (2.0.0)
       net-ssh (>= 4.0.0)
     net-telnet (0.1.1)
-    nokogiri (1.13.6-x86_64-linux)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     nori (2.6.0)
     options (2.3.2)
@@ -1704,7 +1704,7 @@ GEM
     wisper (2.0.1)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   awspec
